@@ -1,3 +1,4 @@
+import 'package:chat_app/vues/identity.dart';
 import 'package:flutter/material.dart';
 import 'vues/intro.dart';
 
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: "/intro",
       routes: {
         "/intro": (context) => Intro(),
+        "/identity": (context) => Identity(),
       },
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
