@@ -7,6 +7,7 @@ class Intro extends StatelessWidget {
       body: PageView(
         scrollDirection: Axis.horizontal,
         children: [
+
           // Page 1
           Container(
             color: const Color(0xff0F1828),
