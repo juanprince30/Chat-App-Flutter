@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'intro.dart';
+import 'vues/intro.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
