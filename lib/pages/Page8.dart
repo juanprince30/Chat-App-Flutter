@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/tools/color.dart';
-import 'package:chat_app/models/message_model.dart';
+import 'package:chat_app/Models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
