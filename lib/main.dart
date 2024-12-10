@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monapp_odc/verify_screen.dart';
-import 'phone_number.dart';
+import 'pages/phone_number.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: VerifyCodeScreen(),
+      home: EnterPhoneScreen(),
     );
   }
 }

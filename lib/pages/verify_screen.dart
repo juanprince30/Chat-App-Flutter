@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monapp_odc/phone_number.dart';
+import 'package:monapp_odc/pages/phone_number.dart';
 import 'package:pinput/pinput.dart';
 
 class VerifyCodeScreen extends StatefulWidget {

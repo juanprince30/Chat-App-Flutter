@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+import 'package:monapp_odc/pages/verify_screen.dart';
 
 class EnterPhoneScreen extends StatefulWidget {
   @override
@@ -104,7 +105,12 @@ class _EnterPhoneScreenState extends State<EnterPhoneScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   // Action for the Continue button
+
                   print('Phone number: ${_selectedCountryCode?.dialCode} ${_phoneController.text}');
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => VerifyCodeScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
