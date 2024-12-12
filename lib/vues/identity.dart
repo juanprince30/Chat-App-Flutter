@@ -115,15 +115,28 @@ class _IdentityState extends State<Identity> {
                     color: Colors.white
                 ),),
               ),
-              Stack(
-                children: [
-                  Icon(Icons.arrow_right),
-                ],
-              )
             ],
           ),
         ),
       ),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomLeft, // Place le bouton en bas à gauche
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(30, 0, 0, 10),
+          child: FloatingActionButton(
+            onPressed: () {
+              Navigator.popAndPushNamed(context, "/addPlace");
+            },
+            backgroundColor: const Color.fromARGB(255, 58, 94, 183),
+            child: const Icon(
+              Icons.arrow_back, // Flèche vers la gauche
+              size: 24,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+
     );
   }
 }
