@@ -1,3 +1,4 @@
+import 'package:chat_app/Pages/page8.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/tools/color.dart';
 
@@ -83,20 +84,20 @@ class _Page6State extends State<Page6> {
                               ? NetworkImage(chat['profilePic'])
                               : null,
                           backgroundColor: chat['profilePic'] == null
-                              ? Colors.blue
+                              ? blueOurColor
                               : Colors.transparent,
                           child: chat['profilePic'] == null
                               ? Text(
                                   chat['name'][0],
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
+                                  style: const TextStyle(
+                                  color: Colors.white, fontSize: 20),
                                 )
                               : null,
                         ),
-                        SizedBox(height: 5),
+                        const SizedBox(height: 5),
                         Text(
                           chat['name'].split(' ')[0],
-                          style: TextStyle(color: Colors.white70, fontSize: 12),
+                          style: const TextStyle(color: Colors.white70, fontSize: 12),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -110,13 +111,13 @@ class _Page6State extends State<Page6> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Search',
-                hintStyle: TextStyle(color: Colors.white60),
+                hintStyle: const TextStyle(color: Colors.white60),
                 filled: true,
                 fillColor: Colors.white10,
-                prefixIcon: Icon(Icons.search, color: Colors.white60),
+                prefixIcon: const Icon(Icons.search, color: Colors.white60),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                   borderSide: BorderSide.none,
@@ -132,6 +133,11 @@ class _Page6State extends State<Page6> {
               itemBuilder: (context, index) {
                 final chat = chatData[index];
                 return ListTile(
+                  onTap:() {
+                    Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context)=> Page8(name: chat['name'],)),
+                  );
+                  },
                   leading: chat['profilePic'] != null
                       ? CircleAvatar(
                           backgroundImage: NetworkImage(chat['profilePic']),
@@ -175,9 +181,6 @@ class _Page6State extends State<Page6> {
                         ),
                     ],
                   ),
-                  onTap: () {
-                    // Action
-                  },
                 );
               },
             ),

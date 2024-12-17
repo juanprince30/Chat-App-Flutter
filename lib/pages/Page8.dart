@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Page8 extends StatefulWidget {
-  const Page8({super.key});
+  String name;
+  Page8({required this.name,super.key});
 
   @override
   State<Page8> createState() => _Page8State();
@@ -105,8 +106,13 @@ class _Page8State extends State<Page8> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: mainColor,
-        leading: const Icon(Icons.arrow_back_ios_new, color: Colors.white,),
-        title: const Text("Juan Prince",style: TextStyle(color: Colors.white),),
+        leading:  IconButton(
+          onPressed: (){
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white,),
+        ),
+        title:  Text(widget.name,style: const TextStyle(color: Colors.white),),
         actions: const [
           Icon(Icons.search, color: Colors.white,),
           SizedBox(width: 8,),
