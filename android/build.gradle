@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        google()  // Ajoutez Google comme repository
+        mavenCentral()  // Ajoutez Maven Central pour les autres dépendances
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0' // Utilisez une version compatible avec compileSdk 35
+    }
+}
+
 allprojects {
     repositories {
         google()

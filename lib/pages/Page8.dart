@@ -1,19 +1,17 @@
 import 'dart:io';
-
 import 'package:chat_app/tools/color.dart';
 import 'package:chat_app/Models/message_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 
-class MyPage8 extends StatefulWidget {
-  const MyPage8({super.key});
+class Page8 extends StatefulWidget {
+  const Page8({super.key});
 
   @override
-  State<MyPage8> createState() => _MyPage8State();
+  State<Page8> createState() => _Page8State();
 }
 
-class _MyPage8State extends State<MyPage8> {
+class _Page8State extends State<Page8> {
   final messageKey= GlobalKey<FormState>();
   TextEditingController messageController=TextEditingController();
   final ScrollController _scrollController = ScrollController();

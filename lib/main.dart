@@ -1,4 +1,5 @@
-import 'package:chat_app/Pages/Page8.dart';
+import 'package:chat_app/Pages/page8.dart';
+import 'package:chat_app/Pages/page1.dart';
 import 'package:chat_app/tools/color.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     
-    return const MyPage8() ;
+    return Page1();
   }
 }
