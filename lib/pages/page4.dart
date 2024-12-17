@@ -1,3 +1,6 @@
+import 'package:chat_app/Pages/MainPage.dart';
+import 'package:chat_app/Pages/page6.dart';
+import 'package:chat_app/Pages/page7.dart';
 import 'package:chat_app/Pages/page8.dart';
 import 'package:chat_app/tools/color.dart';
 import 'package:flutter/material.dart';
@@ -86,8 +89,8 @@ class Page4 extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context)=> const Page8()),
-                        );
+                    MaterialPageRoute(builder: (context)=> const Mainpage()),
+                  );
                 },
                 child: const Text(
                   'Enregistrer',
