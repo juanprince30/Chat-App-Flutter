@@ -3,9 +3,10 @@ import 'package:chat_app/vues/identity.dart';
 import 'package:chat_app/vues/new_page.dart';
 import 'package:chat_app/vues/phone_entry.dart';
 import 'package:flutter/material.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 import 'vues/intro.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SmsTelephony.createTelephonyInstance();
   runApp(const MyApp());

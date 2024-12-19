@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 import '../outils/codeCreate.dart';
 import '../outils/sms_telephony.dart';
@@ -12,14 +13,39 @@ class Identity extends StatefulWidget {
 
 int numberOfControllers = 4;
 
-class _IdentityState extends State<Identity> {
-
+class _IdentityState extends State<Identity> with CodeAutoFill{
   List<TextEditingController> codeController = List.generate(
     numberOfControllers,
-        (index) => TextEditingController(),
+    (index) => TextEditingController(),
   );
 
   bool hasNavigated = false;
+  String? appSignature;
+  String? otpCode;
+
+  @override
+  void codeUpdated() {
+    setState(() {
+      otpCode = code!;
+    });
+  }
+  @override
+  void initState() {
+    super.initState();
+    listenForCode();
+    SmsAutoFill().getAppSignature.then((signature) {
+      print('signature: $signature');
+      setState(() {
+        appSignature = signature;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,51 +59,48 @@ class _IdentityState extends State<Identity> {
     print(receivedCode);
     String? phoneNumber = args['phoneNumber'];
 
-    Future.delayed(Duration(seconds: 3), () {
-      List<String> codeArray = receivedCode.split('');
-      setState(() {
-        for (int i = 0; i < codeArray.length; i++) {
-          codeController[i].text = codeArray[i];
-        }
-      });
-    });
+    // Future.delayed(Duration(seconds: 3), () {
+    //   List<String> codeArray = receivedCode.split('');
+    //   setState(() {
+    //     for (int i = 0; i < codeArray.length; i++) {
+    //       codeController[i].text = codeArray[i];
+    //     }
+    //   });
+    // });
+    //
+    // String codeVerificationCOntroller = codeController.map((controller) => controller.text).join();
+    //
+    // void navigateWithAnimation(BuildContext context) {
+    //
+    //   if (hasNavigated) return; // Empêche une navigation répétée
+    //
+    //   setState(() {
+    //     hasNavigated = true; // Marque la navigation comme effectuée
+    //   });
+    //
+    //   Future.delayed(Duration.zero, () {
+    //     showDialog(
+    //       context: context,
+    //       barrierDismissible: false,
+    //       builder: (context) => Center(
+    //         child: LoadingAnimationWidget.discreteCircle(
+    //           color: Colors.blue,
+    //           size: 100,
+    //         ),
+    //       ),
+    //     );
+    //
+    //     Future.delayed(Duration(seconds: 2), () {
+    //       Navigator.pop(context); // Ferme le dialog
+    //       Navigator.pushNamed(context, '/new_page'); // Navigue vers la nouvelle page
+    //     });
+    //   });
+    // }
 
-    String codeVerificationCOntroller = codeController.map((controller) => controller.text).join();
-
-    void navigateWithAnimation(BuildContext context) {
-
-      if (hasNavigated) return; // Empêche une navigation répétée
-
-      setState(() {
-        hasNavigated = true; // Marque la navigation comme effectuée
-      });
-
-      Future.delayed(Duration.zero, () {
-        showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => Center(
-            child: LoadingAnimationWidget.discreteCircle(
-              color: Colors.blue,
-              size: 100,
-            ),
-          ),
-        );
-
-        Future.delayed(Duration(seconds: 2), () {
-          Navigator.pop(context); // Ferme le dialog
-          Navigator.pushNamed(context, '/new_page'); // Navigue vers la nouvelle page
-        });
-      });
-    }
-
-
-    if(receivedCode == codeVerificationCOntroller) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        navigateWithAnimation(context);
-      });    }
-
-
+    // if(receivedCode == codeVerificationCOntroller) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     navigateWithAnimation(context);
+    //   });    }
 
     return Scaffold(
       appBar: AppBar(
@@ -124,55 +147,70 @@ class _IdentityState extends State<Identity> {
                 child: Form(
                   child: SizedBox(
                     height: screenHeight * 0.1,
-                    // Définit une hauteur fixe pour éviter les conflits
-                    child: ListView.builder(
-                      itemCount: 4,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: screenWidth * 0.023),
-                          child: SizedBox(
-                            width: screenWidth * 0.18,
-                            child: TextFormField(
-                              onChanged: (value) {
-                                if (value.length == 1) {
-                                  FocusScope.of(context).nextFocus();
-                                }
-                              },
-                              controller: codeController[index],
-                              decoration: InputDecoration(
-                                hintText: "0",
-                                hintStyle:
-                                    const TextStyle(color: Colors.white12),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.white10),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.teal.shade100,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                              ),
-                              style: TextStyle(
-                                fontSize: screenWidth * 0.05,
-                                color: Colors.white60,
-                              ),
-                              keyboardType: TextInputType.number,
-                              textAlign: TextAlign.center,
-                              inputFormatters: [
-                                LengthLimitingTextInputFormatter(1),
-                                FilteringTextInputFormatter.digitsOnly,
-                              ],
-                            ),
-                          ),
-                        );
+                    child:
+
+                    PinFieldAutoFill(
+                      decoration: UnderlineDecoration(
+                        textStyle: const TextStyle(fontSize: 30, color: Colors.white),
+                        colorBuilder: FixedColorBuilder(Colors.white.withOpacity(0.3)),
+                      ),
+                      currentCode: otpCode,
+                      onCodeSubmitted: (String code) {
+                        print(code);
                       },
-                    ),
+                      onCodeChanged: (code) {
+                      if (code!.length == 4) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      }},
+                      codeLength: 4,
+                    ), //ListView.builder(
+                    //   itemCount: 4,
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemBuilder: (context, index) {
+                    //     return Padding(
+                    //       padding: EdgeInsets.symmetric(
+                    //           horizontal: screenWidth * 0.023),
+                    //       child: SizedBox(
+                    //         width: screenWidth * 0.18,
+                    //         child: TextFormField(
+                    //           onChanged: (value) {
+                    //             if (value.length == 1) {
+                    //               FocusScope.of(context).nextFocus();
+                    //             }
+                    //           },
+                    //           controller: codeController[index],
+                    //           decoration: InputDecoration(
+                    //             hintText: "0",
+                    //             hintStyle:
+                    //                 const TextStyle(color: Colors.white12),
+                    //             enabledBorder: OutlineInputBorder(
+                    //               borderSide:
+                    //                   const BorderSide(color: Colors.white10),
+                    //               borderRadius: BorderRadius.circular(8.0),
+                    //             ),
+                    //             focusedBorder: OutlineInputBorder(
+                    //               borderSide: BorderSide(
+                    //                 color: Colors.teal.shade100,
+                    //                 width: 1.0,
+                    //               ),
+                    //               borderRadius: BorderRadius.circular(8.0),
+                    //             ),
+                    //           ),
+                    //           style: TextStyle(
+                    //             fontSize: screenWidth * 0.05,
+                    //             color: Colors.white60,
+                    //           ),
+                    //           keyboardType: TextInputType.number,
+                    //           textAlign: TextAlign.center,
+                    //           inputFormatters: [
+                    //             LengthLimitingTextInputFormatter(1),
+                    //             FilteringTextInputFormatter.digitsOnly,
+                    //           ],
+                    //         ),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
                   ),
                 ),
               ),
@@ -199,6 +237,19 @@ class _IdentityState extends State<Identity> {
                       fontSize: screenWidth * 0.04, color: Colors.white),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 32),
+                child: Builder(
+                  builder: (_) {
+                    if (otpCode == null) {
+                      return const Text("Listening for code...",style:
+                        TextStyle(color: Colors.white),);
+                    }
+                    return Text("Code Received: $otpCode",style:
+                    TextStyle(color: Colors.white),);
+                  },
+                ),
+              ),
             ],
           ),
         ),
@@ -223,4 +274,5 @@ class _IdentityState extends State<Identity> {
       ),
     );
   }
+
 }

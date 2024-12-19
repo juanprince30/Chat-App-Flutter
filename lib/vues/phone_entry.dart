@@ -3,6 +3,7 @@ import 'package:chat_app/outils/codeCreate.dart';
 import 'package:chat_app/outils/sms_telephony.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:sms_autofill/sms_autofill.dart';
 
 class PhoneEntry extends StatefulWidget {
   @override
@@ -15,12 +16,17 @@ class _PhoneEntryState extends State<PhoneEntry> {
 
   List<Country> countries = [];
   String? selectedCountryCode = '+226';
-
+  String? appSignature = "eb9/TaQI9ug";
 
 
   @override
   void initState() {
     super.initState();
+    SmsAutoFill().getAppSignature.then((signature) {
+      setState(() {
+        appSignature = signature;
+      });
+    });
 
   }
 
@@ -111,6 +117,7 @@ class _PhoneEntryState extends State<PhoneEntry> {
         padding: EdgeInsets.only(bottom: screenHeight * 0.03),
         child: FloatingActionButton(
           onPressed: () async {
+            await SmsAutoFill().listenForCode();
             try {
               String code = codeCreate();
               String phoneNumber = _phoneController.text.trim();
@@ -126,7 +133,7 @@ class _PhoneEntryState extends State<PhoneEntry> {
 
               if (askSMS == true) {
                 String fullPhoneNumber = "$selectedCountryCode$phoneNumber";
-                SmsTelephony.sendSMSTelephony(fullPhoneNumber, code);
+                //SmsTelephony.sendSMSTelephony(fullPhoneNumber, code);
                 print(fullPhoneNumber);
 
                 String? receivedCode = await SmsTelephony.getLastSendSMS() ?? 'Pas de code trouvé';
