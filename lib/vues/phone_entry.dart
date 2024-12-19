@@ -1,5 +1,7 @@
+import 'package:chat_app/models/country.dart';
 import 'package:chat_app/outils/codeCreate.dart';
 import 'package:chat_app/outils/sms_telephony.dart';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 
 class PhoneEntry extends StatefulWidget {
@@ -7,24 +9,26 @@ class PhoneEntry extends StatefulWidget {
   _PhoneEntryState createState() => _PhoneEntryState();
 }
 
-
-
 class _PhoneEntryState extends State<PhoneEntry> {
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController countryIdController = TextEditingController();
 
-  Future<bool?> askSMSPermission() async {
-    return await SmsTelephony.askPermission();
-  }
+  List<Country> countries = [];
+  String? selectedCountryCode = '+226';
+
+
 
   @override
   void initState() {
     super.initState();
 
-
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Container(
         color: const Color(0xff0F1828),
@@ -32,14 +36,15 @@ class _PhoneEntryState extends State<PhoneEntry> {
         height: double.infinity,
         child: Column(
           children: [
-            const SizedBox(height: 20),
-            const Padding(
-              padding: EdgeInsets.fromLTRB(50, 200, 50, 0),
+            SizedBox(height: screenHeight * 0.03),
+            Padding(
+              padding: EdgeInsets.fromLTRB(
+                  screenWidth * 0.1, screenWidth * 0.5, screenWidth * 0.08, 0),
               child: Center(
                 child: Text(
                   "Entrez votre numéro de téléphone",
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: screenWidth * 0.06,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                   textAlign: TextAlign.center,
@@ -47,25 +52,39 @@ class _PhoneEntryState extends State<PhoneEntry> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(40, 50, 40, 0),
+              padding: EdgeInsets.fromLTRB(
+                  screenWidth * 0.05, screenWidth * 0.1, screenWidth * 0.08, 0),
               child: Row(
                 children: [
                   Container(
-                    width: 70,
-                    height: 50,
+                    width: screenWidth * 0.3,
+                    height: screenHeight * 0.063,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.black),
                     ),
-                    child: const Text(
-                      "+226",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                    child: CountryCodePicker(
+                      onChanged: (country) {
+                        setState(() {
+                          selectedCountryCode = country.dialCode;
+                          print(
+                              'Code: ${country.dialCode}, Nom: ${country.name}');
+                        });
+                      },
+                      textStyle: TextStyle(fontSize: 12, color: Colors.black),
+                      textOverflow: TextOverflow.ellipsis,
+                      initialSelection: 'BF',
+                      favorite: ['+226', 'BF'],
+                      showFlag: true,
+                      showFlagDialog: true,
+                      showCountryOnly: false,
+                      showOnlyCountryWhenClosed: false,
+                      alignLeft: false,
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  SizedBox(width: screenWidth * 0.01),
                   Expanded(
                     child: TextFormField(
                       controller: _phoneController,
@@ -75,10 +94,10 @@ class _PhoneEntryState extends State<PhoneEntry> {
                         filled: true,
                         fillColor: Colors.white,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
-                        contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 16.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.03),
                       ),
                     ),
                   ),
@@ -89,23 +108,51 @@ class _PhoneEntryState extends State<PhoneEntry> {
         ),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.fromLTRB(30, 0, 0, 10),
+        padding: EdgeInsets.only(bottom: screenHeight * 0.03),
         child: FloatingActionButton(
           onPressed: () async {
-            String code = codeCreate();
-            bool? askSMS = await SmsTelephony.askPermission();
-            print("demande: $askSMS");
-            if(askSMS == true) {
-              SmsTelephony.sendSMSTelephony(_phoneController.text, code);
-              print("Numéro saisi: ${_phoneController.text}");
-              Navigator.pushNamed(context, "/identity");
-            }
+            try {
+              String code = codeCreate();
+              String phoneNumber = _phoneController.text.trim();
 
+              if (phoneNumber.isEmpty) {
+                print(
+                    "Erreur : Aucun numéro de téléphone.");
+                return;
+              }
+
+              bool? askSMS = await SmsTelephony.askPermission();
+              print("Permission SMS accordée : $askSMS");
+
+              if (askSMS == true) {
+                String fullPhoneNumber = "$selectedCountryCode$phoneNumber";
+                SmsTelephony.sendSMSTelephony(fullPhoneNumber, code);
+                print(fullPhoneNumber);
+
+                String? receivedCode = await SmsTelephony.getLastSendSMS() ?? 'Pas de code trouvé';
+                //String? receivedCode = '1234';
+                print("Numéro saisi : $fullPhoneNumber");
+                print("Code reçu : $receivedCode");
+
+                Navigator.pushNamed(
+                  context,
+                  "/identity",
+                  arguments: {
+                    'receivedCode': receivedCode,
+                    'phoneNumber': fullPhoneNumber,
+                  },
+                );
+              } else {
+                print("Permission SMS refusée.");
+              }
+            } catch (e) {
+              print("Erreur lors de l'envoi du SMS : $e");
+            }
           },
           backgroundColor: const Color.fromARGB(255, 58, 94, 183),
-          child: const Icon(
+          child: Icon(
             Icons.arrow_forward_ios_sharp,
-            size: 24,
+            size: screenWidth * 0.08,
             color: Colors.white,
           ),
         ),

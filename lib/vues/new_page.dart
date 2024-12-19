@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../outils/fetchCountries.dart';
 
-class Intro extends StatelessWidget {
+class NewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
