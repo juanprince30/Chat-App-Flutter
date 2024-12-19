@@ -42,7 +42,7 @@ class _Page6State extends State<Page6> {
       appBar: AppBar(
         backgroundColor: mainColor,
         foregroundColor: Colors.white,
-        title: const Text('Chats', style: TextStyle(fontSize: 20)),
+        title: const Text('Messages', style: TextStyle(fontSize: 20)),
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
@@ -113,7 +113,7 @@ class _Page6State extends State<Page6> {
             child: TextField(
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
-                hintText: 'Search',
+                hintText: 'Rechercher',
                 hintStyle: const TextStyle(color: Colors.white60),
                 filled: true,
                 fillColor: Colors.white10,

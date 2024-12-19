@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:chat_app/Pages/MainPage.dart';
 import 'package:chat_app/tools/color.dart';
 import 'package:chat_app/Models/message_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+// ignore: must_be_immutable
 class Page8 extends StatefulWidget {
   String name;
   Page8({required this.name,super.key});

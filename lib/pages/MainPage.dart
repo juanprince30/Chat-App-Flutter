@@ -1,7 +1,6 @@
 import 'package:chat_app/Pages/page5.dart';
 import 'package:chat_app/Pages/page6.dart';
 import 'package:chat_app/Pages/page7.dart';
-import 'package:chat_app/Pages/page8.dart';
 import 'package:chat_app/tools/color.dart';
 import 'package:flutter/material.dart';
 
@@ -102,7 +101,7 @@ class _MainpageState extends State<Mainpage> {
                     const Column(
                       children: [
                         Text(
-                          'Chats',
+                          'Messages',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -133,7 +132,7 @@ class _MainpageState extends State<Mainpage> {
                     const Column(
                       children: [
                         Text(
-                          'Settings',
+                          'Reglages',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,

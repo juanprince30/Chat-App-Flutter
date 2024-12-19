@@ -197,7 +197,7 @@ class _Page5State extends State<Page5> {
               child: TextField(
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
-                  hintText: 'Search',
+                  hintText: 'Rechercher',
                   hintStyle: const TextStyle(color: Colors.white60),
                   filled: true,
                   fillColor: Colors.white10,
