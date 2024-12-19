@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chat_app/Pages/MainPage.dart';
 import 'package:chat_app/tools/color.dart';
 import 'package:chat_app/Models/message_model.dart';
 import 'package:flutter/material.dart';
@@ -317,6 +318,7 @@ class _Page8State extends State<Page8> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       FloatingActionButton(
+                        heroTag: "btn1",
                         mini: true,
                         onPressed: () async {
                           final image_ = await picker.pickImage
@@ -336,6 +338,7 @@ class _Page8State extends State<Page8> {
                         child: Icon(Icons.photo_camera, color: blueOurColor),
                       ),
                       FloatingActionButton(
+                        heroTag: "btn2",
                         mini: true,
                         onPressed: () async {
                           final image_ = await picker.pickImage

@@ -6,7 +6,11 @@ import 'package:chat_app/tools/color.dart';
 import 'package:flutter/material.dart';
 
 class Mainpage extends StatefulWidget {
-  const Mainpage({super.key});
+  final String tel;
+  final String nom;
+  final String prenom;
+  final String? image;
+  const Mainpage({required this.tel,required this.image,required this.prenom,required this.nom,super.key});
 
   @override
   State<Mainpage> createState() => _MainpageState();
@@ -40,10 +44,10 @@ class _MainpageState extends State<Mainpage> {
       body: PageView(
         controller: _pageController,
         onPageChanged: onPageChanged,
-        children: const [
-          Page5(),
-          Page6(),
-          Page7(),
+        children:  [
+          const Page5(),
+          const Page6(),
+          Page7(tel: widget.tel,image: widget.image, prenom: widget.prenom, nom: widget.nom)
         ],
       ),
       bottomNavigationBar: BottomAppBar(
