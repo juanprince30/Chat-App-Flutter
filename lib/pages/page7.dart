@@ -73,7 +73,6 @@ class _Page7State extends State<Page7> {
               ),
               const Divider(color: Colors.white54),
               _buildMenuItem(Icons.account_circle, 'Compte'),
-              _buildMenuItem(Icons.chat, 'Messages'),
               _buildMenuItem(Icons.brightness_6, 'Apparences'),
               _buildMenuItem(Icons.notifications, 'Notification'),
               _buildMenuItem(Icons.lock, 'Confidentialite'),

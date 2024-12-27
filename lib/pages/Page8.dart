@@ -23,7 +23,8 @@ class _Page8State extends State<Page8> {
   XFile? image;
 
   List<Message> messages = [
-    Message(image:null,body: "hi prince", sender: "me", read: true, date: "05/12/2024", heure: "19.00"),
+    Message(image:null,body: "Bienvenue dans la communaute Orange Digital Center", sender: "his", read: true, date: "05/12/2024", heure: "19.04"),
+    /* Message(image:null,body: "hi prince", sender: "me", read: true, date: "05/12/2024", heure: "19.00"),
     Message(image:null,body: "yo man", sender: "h5s", read: true, date: "05/12/2024", heure: "19.04"),
     Message(image:null,body: "what's up. I want to talk about last night... with hannah", sender: "me", read: true, date: "05/12/2024", heure: "19.07"),
     Message(image:null,body: "answer me bro I'm very sorry about it", sender: "me", read: true, date: "05/12/2024", heure: "19.50"),
@@ -41,7 +42,7 @@ class _Page8State extends State<Page8> {
       date: "06/12/2024",
       heure: "08.44",
     ),
-
+ */
   ];
 
   void addMessage(String body) {

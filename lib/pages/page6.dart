@@ -13,24 +13,24 @@ class Page6 extends StatefulWidget {
 class _Page6State extends State<Page6> {
   final List<Map<String, dynamic>> chatData = [
     {
-      'name': 'Athalia Putri',
-      'message': 'Good morning, did you sleep well?',
-      'time': 'Today',
-      'profilePic': 'https://via.placeholder.com/150',
+      'name': 'Mr Ivan BESSIN',
+      'message': 'Bonjour a tous',
+      'time': 'Aujourd\'hui',
+      'profilePic': null,
       'unreadCount': 1,
     },
     {
-      'name': 'Raki Devon',
-      'message': 'How is it going?',
+      'name': 'Kizito',
+      'message': 'Parcours Marker est faites pour vous',
       'time': '17/6',
       'profilePic': null,
       'unreadCount': 0,
     },
     {
-      'name': 'Erlan Sadewa',
-      'message': 'Aight, noted',
+      'name': 'JB Flutter',
+      'message': 'La formation m\'as aide a trouver du travail ',
       'time': '17/6',
-      'profilePic': 'https://via.placeholder.com/150',
+      'profilePic': null,
       'unreadCount': 1,
     },
   ];

@@ -70,7 +70,7 @@ class _MainpageState extends State<Mainpage> {
                     const Column(
                       children: [
                         Text(
-                          'Contact',
+                          'Communauté',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,

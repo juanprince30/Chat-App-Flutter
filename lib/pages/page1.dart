@@ -16,12 +16,12 @@ class Page1 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const SizedBox(height: 140),
-                  Image.asset("assets/images/Illustration.png"),
+                  Image.asset("assets/images/test.webp"),
                   const Padding(
                     padding: EdgeInsets.only(top: 20, left: 20, right: 20),
                     child: Center(
                       child: Text(
-                        "Connecter vous facilement avec votre famille et vos amis partout dans le monde",
+                        "Rejoignez la communauté Orange Digital Center et accédez à une multitude d’avantages exclusifs !",
                         style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.bold,
